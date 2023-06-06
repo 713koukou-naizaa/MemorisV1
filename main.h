@@ -845,7 +845,45 @@ void fct_void_farm_after_blizzard_script()
 void fct_void_galefield_house3_script()
 {
 
+	int int_temp_choice;
 
+	int int_array_str_galefield_house3_temp_story_size = 1;
+	str array_str_galefield_house3_temp_story[2] = {
+
+		"abc",
+
+		"abc?\n[1] Yes\n[2] No"
+
+	};
+
+	fct_void_display_story(array_str_galefield_house3_temp_story, int_array_str_galefield_house3_temp_story_size);
+
+	cin >> int_temp_choice;
+
+	switch (int_temp_choice)
+	{
+
+	case 1: // If player chooses to read the book
+
+		cout << "abc" << endl;
+
+		break;
+
+	case 2: // If player chooses not to read the book
+
+		cout << "You leave the house\n" << endl;
+
+		int_current_place = 8;
+
+		break;
+
+	default: // If player writes an invalid choice
+
+		cout << "Invalid choice, please enter the number corresponding to your desired choice\n" << endl;
+
+		fct_void_galefield_house3_script();
+
+	}
 
 }
 
