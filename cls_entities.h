@@ -425,6 +425,8 @@ cls_entities obj_villager("baker", "No class", "human", 1, 0, 0, 50, 50, 20, 20,
 
 //Creating playable characters
 
+cls_entities obj_wolf("wolf", "No class", "canidae", 1, 0, 5, 20, 20, 20, 20, 5, 0, 110);
+
 cls_entities obj_slime("slime", "No class", "slime", 1, 0, 5, 30, 30, 20, 20, 5, 0, 70);
 
 cls_entities obj_slime_catastrophy("slime catastrophy", "No class", "slime", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);

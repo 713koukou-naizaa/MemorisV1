@@ -40,6 +40,8 @@ extern bool bool_game_ended;
 
 bool bool_fight_abandoned;
 
+int int_fight_result;
+
 /*-----------* FIGHT *-----------*/
 
 void fct_void_player_escape()
@@ -358,10 +360,14 @@ void fct_void_fight(cls_entities* obj_character, cls_entities* obj_opponent)
 
 		obj_character->fct_void_character_lvl_up(obj_character);
 
+		int_fight_result = 1;
+
 	}
 	else if (obj_character->getInt_entity_health() <= 0 && obj_opponent->getInt_entity_health() > 0) {
 
 		obj_character->fct_void_character_death(obj_character);
+
+		int_fight_result = 0;
 
 	}
 	else if (obj_character->getInt_entity_health() <= 0 && obj_opponent->getInt_entity_health() <= 0) {
@@ -369,11 +375,15 @@ void fct_void_fight(cls_entities* obj_character, cls_entities* obj_opponent)
 		obj_opponent->fct_void_opponent_death(obj_opponent, obj_character);
 		obj_character->fct_void_character_death(obj_character);
 
+		int_fight_result = 0;
+
 	}
 	else if (bool_fight_abandoned == true)
 	{
 
 		bool_fight_abandoned = false;
+
+		int_fight_result = 2;
 
 		// Continues code ignoring fight
 
@@ -696,7 +706,7 @@ void fct_void_river_after_blizzard_script()
 
 	};
 
-	cout << "After some time following the river, you discover what seems to be a ball of ice" << endl;
+	cout << "After some time following the river, you discover what seems to be a frozen wolf on the ground" << endl;
 
 	fct_void_display_story(array_str_river_after_blizzard_story, int_array_str_river_after_blizzard_story_size);
 
@@ -779,6 +789,25 @@ void fct_void_road_after_blizzard_script()
 
 		fct_void_fight(&obj_character, &obj_opponent);
 
+		if (int_fight_result == 1)
+		{
+
+			// Continues code
+
+		}
+		else if (int_fight_result == 0)
+		{
+
+			int_current_place = 1;
+
+		}
+		else 
+		{
+
+			cout << "Problem with fight result variable value" << endl;
+
+		}
+
 	case 2: // If player doesn't enter forest
 
 		cout << "\nYou go back to the farm\n" << endl;
@@ -845,27 +874,71 @@ void fct_void_farm_after_blizzard_script()
 void fct_void_galefield_house3_script()
 {
 
-	int int_temp_choice;
+	int int_check_second_room_choice;
 
-	int int_array_str_galefield_house3_temp_story_size = 1;
-	str array_str_galefield_house3_temp_story[2] = {
+	int int_array_str_galefield_house3_first_room_story_size = 1;
+	str array_str_galefield_house3_first_room_story[2] = {
 
-		"abc",
+		"You enter the house, but nothing seems to be useful in the first room",
 
-		"abc?\n[1] Yes\n[2] No"
+		"Check the second room?\n[1] Yes\n[2] No"
 
 	};
 
-	fct_void_display_story(array_str_galefield_house3_temp_story, int_array_str_galefield_house3_temp_story_size);
+	int int_array_str_galefield_house3_ghost_attack_story_size = 2;
+	str array_str_galefield_house3_ghost_attack_story[3] = {
 
-	cin >> int_temp_choice;
+		"You proceed to the second room of the house, but nothing seems interesting in here neither",
 
-	switch (int_temp_choice)
+		"You retrace your step, but as soon as you turn back, you see a floating shadow with small white eyes looking at you intently in the corner of the room",
+
+		"It flies towards you!"
+
+	};
+
+	fct_void_display_story(array_str_galefield_house3_first_room_story, int_array_str_galefield_house3_first_room_story_size);
+
+	cin >> int_check_second_room_choice;
+
+	switch (int_check_second_room_choice)
 	{
 
 	case 1: // If player chooses to read the book
 
-		cout << "abc" << endl;
+		fct_void_display_story(array_str_galefield_house3_ghost_attack_story, int_array_str_galefield_house3_ghost_attack_story_size);
+
+		obj_opponent = obj_ghost;
+
+		fct_void_fight(&obj_character, &obj_opponent);
+
+		if (int_fight_result == 1)
+		{
+
+			cout << "You leave the house\n" << endl;
+
+			int_current_place = 8;
+
+		}
+		else if (int_fight_result == 0)
+		{
+
+			int_current_place = 1;
+
+		}
+		else if (int_fight_result == 2)
+		{
+
+			cout << "You leave the house\n" << endl;
+
+			int_current_place = 8;
+
+		}
+		else
+		{
+
+			cout << "Problem with fight result variable value" << endl;
+
+		}
 
 		break;
 
@@ -893,6 +966,8 @@ void fct_void_galefield_house2_script()
 	int int_read_book_choice;
 	int int_read_book_page2_choice;
 	int int_take_vegetables_choice;
+	int int_check_second_room_choice;
+	int int_take_sword_choice;
 
 	int int_array_str_galefield_house2_read_book_choice_story_size = 1;
 	str array_str_galefield_house2_read_book_choice_story[2] = {
@@ -906,7 +981,7 @@ void fct_void_galefield_house2_script()
 	int int_array_str_galefield_house2_read_book_page1_story_size = 1;
 	str array_str_galefield_house2_read_book_page1_story[2] = {
 
-		"xxx date: I bought this diary at a small shop in Windhall, it was pretty expensive for a simple farmer like me, but I've always wanted one to let a proof of my life. Anyway, today the vegetables should be good to be gathered, I plan to do it after I played with Laura as I promised her yesterday. Also, I have to remember I told Tom I'd go with him to deliver a sword to Windhall, I'll quickly pass by the grocery as I forgot to buy milk.",
+		"xxx date: I bought this diary at a small shop in Windhall, it was pretty expensive for a simple farmer like me, but I've always wanted one to let a proof of my life. Anyway, today the vegetables should be good to be gathered, I plan to do it after I played with Laura as I promised her yesterday. Also, I have to return the sword I found yesterday to Windhall, I'll quickly pass by the grocery as I forgot to buy milk.",
 
 		"Read page 2?\n[1] Yes\n[2] No"
 
@@ -922,6 +997,21 @@ void fct_void_galefield_house2_script()
 		"The book ends here",
 
 		"While looking around, you notice some vegetables planted in dirt pots, do you want to take them??\n[1] Yes\n[2] No"
+
+	};
+
+	int int_array_str_galefield_house2_check_second_room_story_size = 0;
+	str array_str_galefield_house2_check_second_room_story[1] = {
+
+		"There is a second room, do you want to take a look?\n[1] Yes\n[2] No"
+
+
+	};
+
+	int int_array_str_galefield_house2_take_sword_story_size = 0;
+	str array_str_galefield_house2_take_sword_story[1] = {
+
+		"Do you want to take it?\n[1] Yes\n[2] No"
 
 	};
 
@@ -956,11 +1046,53 @@ void fct_void_galefield_house2_script()
 
 			case 1: // If player chooses to go take the vegetables
 
-				cout << "You take the vegetables and leave the house" << endl;
-
+				cout << "You take the vegetables" << endl;
 				cout << "TO ADD IN CODE: add vegetables to inventory\n" << endl;
 
-				int_current_place = 8;
+				fct_void_display_story(array_str_galefield_house2_check_second_room_story, int_array_str_galefield_house2_check_second_room_story_size);
+
+				cin >> int_check_second_room_choice;
+
+				switch (int_check_second_room_choice)
+				{
+
+				case 1: // If the player choose to check the second room
+
+					cout << "You walk towards the door, when you enter the room you instantly spot a sword in its shealth on a couch" << endl;
+
+					fct_void_display_story(array_str_galefield_house2_take_sword_story, int_array_str_galefield_house2_take_sword_story_size);
+
+					cin >> int_take_sword_choice;
+
+					switch (int_take_sword_choice)
+					{
+
+					case 1:
+
+						cout << "You take the sword and return to the center of the village" << endl;
+						cout << "TO ADD IN CODE: add sword to inventory\n" << endl;
+
+						int_current_place = 8;
+
+						break;
+
+					case 2:
+
+						cout << "You leave the house return to the center of the village\n" << endl;
+
+						int_current_place = 8;
+
+						break;
+
+					default:
+
+						cout << "Invalid choice, please enter the number corresponding to your desired choice\n" << endl;
+
+						fct_void_galefield_house2_script();
+
+					}
+
+				}
 
 				break;
 
@@ -1123,8 +1255,6 @@ void fct_void_galefield_center_script()
 		cout << "You walk towards the house 3" << endl;
 
 		int_current_place = 11;
-
-		bool_game_ended = true;
 
 		break;
 
@@ -1289,7 +1419,7 @@ void fct_void_after_cave_script()
 void fct_void_cave_script()
 {
 
-	int int_enter_cave_choice; // Represents player choice of entering cave after slimes or not
+	int int_enter_cave_choice; // Represents player choice of entering cave after wolfs or not
 
 	int int_array_str_arrive_cave_entrance_story_size = 1;
 	str array_str_arrive_cave_entrance_story[2] = {
@@ -1340,19 +1470,19 @@ void fct_void_cave_script()
 void fct_void_river_script()
 {
 
-	int int_slime_choice; // Represents player choice of approaching slimes after river or not
+	int int_wolf_choice; // Represents player choice of approaching wolfs after river or not
 
-	int int_array_str_approach_slime_story_size = 0;
-	str array_str_approach_slime_story[1] = {
+	int int_array_str_approach_wolf_story_size = 0;
+	str array_str_approach_wolf_story[1] = {
 
 		"Do you want to approach it?\n[1] Yes\n[2] No"
 
 	};
 
-	int int_array_str_slime_attack_story_size = 0;
-	str array_str_slime_attack_story[1] = {
+	int int_array_str_wolf_attack_story_size = 0;
+	str array_str_wolf_attack_story[1] = {
 
-		"But the green mass comes back faster!"
+		"It runs towards you!"
 
 	};
 
@@ -1363,30 +1493,53 @@ void fct_void_river_script()
 
 	};
 
-	cout << "After some time following the river, you discover a slimy green mass" << endl;
+	cout << "After some time following the river, you notice a wolf sleeping further" << endl;
 
-	fct_void_display_story(array_str_approach_slime_story, int_array_str_approach_slime_story_size);
+	fct_void_display_story(array_str_approach_wolf_story, int_array_str_approach_wolf_story_size);
 
-	cin >> int_slime_choice;
+	cin >> int_wolf_choice;
 
-	switch (int_slime_choice)
+	switch (int_wolf_choice)
 	{
 
-	case 1: // If player approaches slimes: scripted encounter and fight with Slimes
+	case 1: // If player approaches wolfs: scripted encounter and fight with wolfs
 
-		cout << "You approach it slowly, but it starts to clinge to your arm, you throw it away hastily" << endl;
+		cout << "You approach it slowly, but it starts to get up on his feet" << endl;
 
-		fct_void_display_story(array_str_slime_attack_story, int_array_str_slime_attack_story_size);
+		fct_void_display_story(array_str_wolf_attack_story, int_array_str_wolf_attack_story_size);
 
-		obj_opponent = obj_slime;
+		obj_opponent = obj_wolf;
 
 		fct_void_fight(&obj_character, &obj_opponent);
 
-		int_current_place = 5;
-		
+		if (int_fight_result == 1)
+		{
+
+			int_current_place = 5;
+
+		}
+		else if (int_fight_result == 0)
+		{
+
+			int_current_place = 1;
+
+		}
+		else if(int_fight_result==2)
+		{
+
+			int_current_place = 5;
+
+		}
+		else 
+		{
+
+			cout << "Problem with fight result variable value" << endl;
+
+		}
+
 		break;
 
-	case 2: // If player passes by slimes: arrives to cave
+	case 2: // If player passes by wolfs: arrives to cave
 
 		cout << "You decide to spread out a bit of the river" << endl;
 
@@ -1447,6 +1600,33 @@ void fct_void_road_script()
 		obj_opponent = obj_oni;
 
 		fct_void_fight(&obj_character, &obj_opponent);
+
+		if (int_fight_result == 1)
+		{
+
+			// Continues code
+
+		}
+		else if (int_fight_result == 0)
+		{
+
+			int_current_place = 1;
+
+		}
+		else if (int_fight_result == 2)
+		{
+
+			// Continues code
+
+		}
+		else
+		{
+
+			cout << "Problem with fight result variable value" << endl;
+
+		}
+
+		break;
 
 	case 2: // If player doesn't enter forest
 

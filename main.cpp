@@ -1,4 +1,5 @@
 #include <iostream>
+#include<cstdlib>
 
 #include "main.h"
 
@@ -33,6 +34,8 @@ bool bool_game_ended = false;
 
 void main()
 {
+
+	srand((unsigned)time(NULL));
 
 	fct_void_main_menu();
 
