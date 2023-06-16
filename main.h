@@ -1138,7 +1138,64 @@ void fct_void_galefield_house2_script()
 
 	case 2: // If player chooses not to read the book
 
-		cout << "You leave the house\n" << endl;
+		fct_void_display_story(array_str_galefield_house2_check_second_room_story, int_array_str_galefield_house2_check_second_room_story_size);
+
+		cin >> int_check_second_room_choice;
+
+		switch (int_check_second_room_choice)
+		{
+
+		case 1: // If the player choose to check the second room
+
+			cout << "You walk towards the door, when you enter the room you instantly spot a sword in its shealth on a couch" << endl;
+
+			fct_void_display_story(array_str_galefield_house2_take_sword_story, int_array_str_galefield_house2_take_sword_story_size);
+
+			cin >> int_take_sword_choice;
+
+			switch (int_take_sword_choice)
+			{
+
+			case 1:
+
+				cout << "You take the sword and return to the center of the village" << endl;
+				cout << "TO ADD IN CODE: add sword to inventory\n" << endl;
+
+				int_current_place = 8;
+
+				break;
+
+			case 2:
+
+				cout << "You leave the house return to the center of the village\n" << endl;
+
+				int_current_place = 8;
+
+				break;
+
+			default:
+
+				cout << "Invalid choice, please enter the number corresponding to your desired choice\n" << endl;
+
+				fct_void_galefield_house2_script();
+
+			}
+
+		case 2: // If player chooses not to take the vegetables
+
+			cout << "You close the book and return to the center of the village\n" << endl;
+
+			int_current_place = 8;
+
+			break;
+
+		default: // If player writes an invalid choice
+
+			cout << "Invalid choice, please enter the number corresponding to your desired choice\n" << endl;
+
+			fct_void_galefield_house2_script();
+
+		}
 
 		int_current_place = 8;
 

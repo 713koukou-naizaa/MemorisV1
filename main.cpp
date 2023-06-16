@@ -164,7 +164,7 @@ void main()
 	if (bool_game_ended == true)
 	{
 
-		cout << "\nThe game is still in progression, please check at the github page of the project for any news and changelog updates: https://github.com/users/Yuzuno/projects/1/views/1" << endl;
+		cout << "\nThe game is still in progression, please check at the github page of the project for any news and devlog updates: https://github.com/users/Yuzuno/projects/1/views/1" << endl;
 		
 		system("pause");
 
