@@ -5,8 +5,11 @@
 #include <iostream>
 
 #include "cls_items.h"
+#include "cls_attacks.h"
+#include "main.h"
 
 using std::cout;
+using std::cin;
 using std::endl;
 using str = std::string;
 
@@ -55,13 +58,23 @@ private:
 	int int_entity_mana;
 	int int_entity_max_mana;
 
-	int int_entity_base_attack;
+	int int_entity_base_physical_attack;
+	int int_entity_base_magical_attack;
 	int int_entity_base_heal;
 	int int_entity_base_speed;
 
+	cls_attacks* cls_attacks_first_attack;
+	cls_attacks* cls_attacks_second_attack;
+	cls_attacks* cls_attacks_third_attack;
+	cls_attacks* cls_attacks_fourth_attack;
+
 public:
 
-	cls_entities(str str_aEntity_name, str str_aEntity_class, str str_aEntity_race, int int_aEntity_lvl, float float_aEntity_xp, float float_aEntity_xp_drop, int int_aEntity_health, int int_aEntity_max_health, int int_aEntity_mana, int int_aEntity_max_mana, int int_aEntity_base_attack, int int_aEntity_base_heal, int int_aEntity_base_speed)
+	cls_entities(str str_aEntity_name, str str_aEntity_class, str str_aEntity_race, int int_aEntity_lvl, float float_aEntity_xp,
+		float float_aEntity_xp_drop, int int_aEntity_health, int int_aEntity_max_health, int int_aEntity_mana,int int_aEntity_max_mana,
+		int int_aEntity_base_physical_attack, int int_aEntity_base_magical_attack,int int_aEntity_base_heal, int int_aEntity_base_speed,
+		cls_attacks& cls_attacks_aFirst_attack, cls_attacks& cls_attacks_aThird_attack, cls_attacks& cls_attacks_aFourth_attack,
+		cls_attacks& cls_attacks_aSecond_attack)
 	{
 
 		setStr_entity_name(str_aEntity_name);
@@ -77,9 +90,15 @@ public:
 		setInt_entity_mana(int_aEntity_mana);
 		setInt_entity_max_mana(int_aEntity_max_mana);
 
-		setInt_entity_base_attack(int_aEntity_base_attack);
+		setInt_entity_base_physical_attack(int_aEntity_base_physical_attack);
+		setInt_entity_base_magical_attack(int_aEntity_base_magical_attack);
 		setInt_entity_base_heal(int_aEntity_base_heal);
 		setInt_entity_base_speed(int_aEntity_base_speed);
+
+		setCls_attacks_first_attack(cls_attacks_aFirst_attack);
+		setCls_attacks_second_attack(cls_attacks_aSecond_attack);
+		setCls_attacks_third_attack(cls_attacks_aThird_attack);
+		setCls_attacks_fourth_attack(cls_attacks_aFourth_attack);
 
 	}
 
@@ -202,15 +221,27 @@ public:
 	}
 
 
-	void setInt_entity_base_attack(int int_aEntity_base_attack)
+	void setInt_entity_base_physical_attack(int int_aEntity_base_physical_attack)
 	{
-		this->int_entity_base_attack = int_aEntity_base_attack;
+		this->int_entity_base_physical_attack = int_aEntity_base_physical_attack;
 	}
 
-	int getInt_entity_base_attack()
+	int getInt_entity_base_physical_attack()
 	{
 
-		return this->int_entity_base_attack;
+		return this->int_entity_base_physical_attack;
+	}
+
+
+	void setInt_entity_base_magical_attack(int int_aEntity_base_magical_attack)
+	{
+		this->int_entity_base_magical_attack = int_aEntity_base_magical_attack;
+	}
+
+	int getInt_entity_base_magical_attack()
+	{
+
+		return this->int_entity_base_magical_attack;
 	}
 
 
@@ -225,6 +256,7 @@ public:
 		return this->int_entity_base_heal;
 	}
 
+
 	void setInt_entity_base_speed(int int_aEntity_base_speed)
 	{
 		this->int_entity_base_speed = int_aEntity_base_speed;
@@ -235,21 +267,46 @@ public:
 		return this->int_entity_base_speed;
 	}
 
-
-	/*void fct_void_display_character_stats(cls_entities* obj_character)
+	void setCls_attacks_first_attack(cls_attacks& cls_attacks_aFirst_attack)
 	{
+		this->cls_attacks_first_attack = &cls_attacks_aFirst_attack;
+	}
 
-		cout << "Your stats are:" << endl;
+	cls_attacks getCls_attacks_first_attack()
+	{
+		return *this->cls_attacks_first_attack;
+	}
 
-		cout << "LVL: " << this->getInt_entity_lvl() << endl;
-		cout << "Health: " << this->getInt_entity_health() << endl;
-		cout << "Mana: " << this->getInt_entity_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
-		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
-		cout << "Speed: " << this->getInt_entity_base_speed() << endl;
-		cout << "XP: " << this->getFloat_entity_xp() << "\n" << endl;
+	void setCls_attacks_second_attack(cls_attacks& cls_attacks_aSecond_attack)
+	{
+		this->cls_attacks_second_attack = &cls_attacks_aSecond_attack;
+	}
 
-	}*/
+	cls_attacks getCls_attacks_second_attack()
+	{
+		return *this->cls_attacks_second_attack;
+	}
+
+	void setCls_attacks_third_attack(cls_attacks& cls_attacks_aThird_attack)
+	{
+		this->cls_attacks_third_attack = &cls_attacks_aThird_attack;
+	}
+
+	cls_attacks getCls_attacks_third_attack()
+	{
+		return *this->cls_attacks_third_attack;
+	}
+
+	void setCls_attacks_fourth_attack(cls_attacks& cls_attacks_aFourth_attack)
+	{
+		this->cls_attacks_fourth_attack = &cls_attacks_aFourth_attack;
+	}
+
+	cls_attacks getCls_attacks_fourth_attack()
+	{
+		return *this->cls_attacks_fourth_attack;
+	}
+
 
 	void fct_void_display_character_stats(cls_entities* obj_character)
 	{
@@ -259,10 +316,15 @@ public:
 		cout << "LVL: " << this->getInt_entity_lvl() << endl;
 		cout << "Health: " << this->getInt_entity_health() << endl;
 		cout << "Mana: " << this->getInt_entity_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
+		cout << "Attack: " << this->getInt_entity_base_physical_attack() << endl;
 		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
 		cout << "Speed: " << this->getInt_entity_base_speed() << endl;
 		cout << "XP: " << this->getFloat_entity_xp() << endl;
+
+		cout << "\nFirst attack: " << this->getCls_attacks_first_attack().getStr_attack_name() << endl;
+		cout << "Second attack: " << this->getCls_attacks_second_attack().getStr_attack_name() << endl;
+		cout << "Third attack: " << this->getCls_attacks_third_attack().getStr_attack_name() << endl;
+		cout << "Fourth attack: " << this->getCls_attacks_fourth_attack().getStr_attack_name() << endl;
 
 	}
 
@@ -273,7 +335,7 @@ public:
 
 		cout << "Health: " << this->getInt_entity_max_health() << endl;
 		cout << "Mana: " << this->getInt_entity_max_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
+		cout << "Attack: " << this->getInt_entity_base_physical_attack() << endl;
 		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
 		cout << "Speed: " << this->getInt_entity_base_speed() << "\n" << endl;
 
@@ -283,7 +345,7 @@ public:
 	{
 
 		this->setInt_entity_max_health(round(this->getInt_entity_max_health() * 1.2));
-		this->setInt_entity_base_attack(round(this->getInt_entity_base_attack() * 1.2));
+		this->setInt_entity_base_physical_attack(round(this->getInt_entity_base_physical_attack() * 1.2));
 		this->setInt_entity_base_heal(round(this->getInt_entity_base_heal() * 1.2));
 		this->setInt_entity_base_speed(round(this->getInt_entity_base_speed() * 1.2));
 
@@ -297,28 +359,83 @@ public:
 		cout << "LVL: " << this->getInt_entity_lvl() << endl;
 		cout << "Health: " << this->getInt_entity_health() << endl;
 		cout << "Mana: " << this->getInt_entity_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
+		cout << "Attack: " << this->getInt_entity_base_physical_attack() << endl;
 		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
 		cout << "Speed: " << this->getInt_entity_base_speed() << endl;
 
 	}
 
 
-	void fct_void_character_deal_damage(cls_entities* obj_opponent, cls_entities* obj_character) // [MAIN] For an entity to deal damage
+	void fct_void_character_attack_choice(cls_entities* obj_opponent, cls_entities* obj_character) // [MAIN] For an entity to deal damage
 	{
 
-		obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - obj_character->getInt_entity_base_attack());
+		int int_attack_choice;
 
-		cout << "You dealt " << obj_character->getInt_entity_base_attack() << " dmg\n" << endl;
+		cout << "Choose an attack:" << endl;
+		cout << "[1] " << obj_character->getCls_attacks_first_attack().getStr_attack_name() << endl;
+		cout << "[2] " << obj_character->getCls_attacks_second_attack().getStr_attack_name() << endl;
+		cout << "[3] " << obj_character->getCls_attacks_third_attack().getStr_attack_name() << endl;
+		cout << "[4] "<<obj_character->getCls_attacks_fourth_attack().getStr_attack_name() << endl;
+		cout << "[5] Return" << endl;
 
+		cin >> int_attack_choice;
+
+		switch (int_attack_choice)
+		{
+
+		case 1:
+
+			cout << "You used " << obj_character->getCls_attacks_first_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_first_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_first_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage()));
+
+			break;
+
+		case 2:
+
+			cout << "You used " << obj_character->getCls_attacks_second_attack().getStr_attack_name() << ", you dealt" << obj_character->getCls_attacks_second_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_second_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage()));
+
+			break;
+
+		case 3: 
+
+			cout << "You used " << obj_character->getCls_attacks_third_attack().getStr_attack_name() << ", you dealt" << obj_character->getCls_attacks_third_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_third_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage()));
+
+			break;
+
+		case 4: 
+
+			cout << "You used " << obj_character->getCls_attacks_fourth_attack().getStr_attack_name() << ", you dealt" << obj_character->getCls_attacks_fourth_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_fourth_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage()));
+
+			break;
+
+		case 5:
+
+			// Continues code
+
+			break;
+
+		default: 
+
+			cout << "Invalid choice, please enter the number corresponding to your desired choice" << endl;
+
+			fct_void_character_attack_choice(obj_opponent, obj_character);
+		}
+		
 	}
 
 	void fct_void_character_take_damage(cls_entities* obj_character, cls_entities* obj_opponent) // [MAIN] For an entity to take damage
 	{
 
-		obj_character->setInt_entity_health(obj_character->getInt_entity_health() - obj_opponent->getInt_entity_base_attack());
+		obj_character->setInt_entity_health(obj_character->getInt_entity_health() - obj_opponent->getInt_entity_base_physical_attack());
 
-		cout << "You received " << obj_opponent->getInt_entity_base_attack() << " dmg\n" << endl;
+		cout << "You received " << obj_opponent->getInt_entity_base_physical_attack() << " damages\n" << endl;
 
 	}
 
@@ -419,43 +536,81 @@ public:
 
 };
 
+
+
+
+
 //Creating NPC's
 
-cls_entities obj_villager("baker", "No class", "human", 1, 0, 0, 50, 50, 20, 20, 1, 0, 50);
+cls_entities obj_baker("baker", "No class", "human",
+	1, 0, 0, 50, 50, 20, 20, 1, 0, 0, 50,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
 //Creating playable characters
 
-cls_entities obj_wolf("wolf", "No class", "canidae", 1, 0, 5, 20, 20, 20, 20, 5, 0, 110);
+cls_entities obj_wolf("wolf", "No class", "canidae",
+	1, 0, 5, 20, 20, 20, 20, 5, 0, 0, 110,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_slime("slime", "No class", "slime", 1, 0, 5, 30, 30, 20, 20, 5, 0, 70);
+cls_entities obj_slime("slime", "No class", "slime",
+	1, 0, 5, 30, 30, 20, 20, 5, 5, 0, 70,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_slime_catastrophy("slime catastrophy", "No class", "slime", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+cls_entities obj_slime_catastrophy("slime catastrophy", "No class", "slime",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_goblin("goblin", "No class", "goblin", 1, 0, 10, 40, 40, 20, 20, 15, 0, 80);
+cls_entities obj_goblin("goblin", "No class", "goblin",
+	1, 0, 10, 40, 40, 20, 20, 15, 0, 0, 80,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_hobgoblin("hobgoblin", "No class", "goblin", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+cls_entities obj_hobgoblin("hobgoblin", "No class", "goblin",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_ghost("ghost", "No class", "undead", 1, 0, 15, 55, 55, 20, 20, 25, 0, 90);
+cls_entities obj_ghost("ghost", "No class", "undead",
+	1, 0, 15, 55, 55, 20, 20, 25, 25, 0, 90,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_spirit("spirit", "No class", "undead", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+cls_entities obj_spirit("spirit", "No class", "undead",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_specter("specter", "No class", "undead", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+cls_entities obj_specter("specter", "No class", "undead",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_oni("oni", "No class", "yokai", 30, 0, 50, 200, 200, 20, 20, 70, 0, 70);
+cls_entities obj_oni("oni", "No class", "yokai",
+	30, 0, 50, 200, 200, 20, 20, 70, 70, 0, 70,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_kirin("kirin", "No class", "kirin", 50, 0, 70, 190, 190, 20, 20, 110, 30, 150);
+cls_entities obj_kirin("kirin", "No class", "kirin",
+	50, 0, 70, 190, 190, 20, 20, 110, 110, 30, 150,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_opponent("opponent", "No class", "No race", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // General opponent used in fight functions after setting its stats to desired one
+cls_entities obj_opponent("opponent", "No class", "No race",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);// General opponent used in fight functions after setting its stats to desired one
 
 //Creating active entities (ennemies)
 
-cls_entities obj_gakutan("Gakutan", "[Assassin]", "???", 1, 0, 0, 50, 50, 20, 20, 70, 0, 170);
+cls_entities obj_gakutan("Gakutan", "[Assassin]", "???",
+	1, 0, 0, 50, 50, 20, 20, 70, 0, 0, 170,
+	obj_punch_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_elva("Elva", "[Priest]", "angel", 1, 0, 0, 150, 150, 20, 20, 15, 35, 100);
+cls_entities obj_elva("Elva", "[Priest]", "angel",
+	1, 0, 0, 150, 150, 20, 20, 15, 0, 35, 100,
+	obj_punch_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_dain("Dain", "[Warrior]", "dwarf", 1, 0, 0, 200, 200, 20, 20, 30, 0, 60);
+cls_entities obj_dain("Dain", "[Warrior]", "dwarf",
+	1, 0, 0, 200, 200, 20, 20, 30, 0, 0, 60,
+	obj_punch_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_character("No name", "No class", "No race", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // General opponent used in fight functions after setting its stats to desired one
+cls_entities obj_character("No name", "No class", "No race",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	obj_fourth_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);// General opponent used in fight functions after setting its stats to desired one
+
+
 
 
 

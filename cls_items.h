@@ -48,14 +48,14 @@ private:
 
 public:
 
-	cls_items(str str_aItem_name, str str_aItem_rarity, int int_aItem_heal_stat, int int_aItem_mana_regeneration_stat, int int_item_physical_damage_stat, int int_item_magical_damage_stat)
+	cls_items(str str_aItem_name, str str_aItem_rarity, int int_aItem_heal_stat, int int_aItem_mana_regeneration_stat, int int_aItem_physical_damage_stat, int int_aItem_magical_damage_stat)
 	{
 
 		setStr_item_name(str_aItem_name);
 		setStr_item_rarity(str_aItem_rarity);
 
 		setInt_item_heal_stat(int_aItem_heal_stat);
-		setInt_item_mana_regeneration_stat(int_aItem_regeneration_mana_stat);
+		setInt_item_mana_regeneration_stat(int_aItem_mana_regeneration_stat);
 		setInt_item_physical_damage_stat(int_aItem_physical_damage_stat);
 		setInt_item_magical_damage_stat(int_aItem_magical_damage_stat);
 

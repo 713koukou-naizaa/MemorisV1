@@ -49,12 +49,12 @@ private:
 
 public:
 
-	cls_attacks(str str_aAttack_name, str str_aAttack_magical_tier, str str_aAttack_elemntal_type, int int_aAttack_physical_damage, int int_aAttack_magical_damage)
+	cls_attacks(str str_aAttack_name, str str_aAttack_magical_tier, str str_aAttack_elemental_type, int int_aAttack_physical_damage, int int_aAttack_magical_damage)
 	{
 
 		setStr_attack_name(str_aAttack_name);
 		setStr_attack_magical_tier(str_aAttack_magical_tier);
-		setSTR_attack_elemental_type(str_aAttack_elemental_type);
+		setStr_attack_elemental_type(str_aAttack_elemental_type);
 
 		setInt_attack_physical_damage(int_aAttack_physical_damage);
 		setInt_attack_magical_damage(int_aAttack_magical_damage);
@@ -126,11 +126,31 @@ public:
 
 //Creating attacks
 
-cls_attacks obj_punch_attack("Punch", "No magical tier", "No elemental type", obj_character.getInt_entity_base_atk(), 0);
+cls_attacks obj_punch_attack("punch", "no magical tier", "no elemental type", 5, 0);
 
-cls_attacks obj_sword_slash_attack("Punch", "No magical tier", "No elemental type", obj_item.getInt_item_dmg_stat(), 0);
+cls_attacks obj_bite_attack("bite", "no magical tier", "no elemental type", 10, 0);
 
-cls_attacks obj_attack("No name", "No magical tier",  "No elemental type", 0, 0); // General item
+cls_attacks obj_corrosion_attack("corrosion", "common", "poison", 0, 10);
+
+cls_attacks obj_club_swing_attack("club swing", "no magical tier", "no elemental type", 15, 0);
+
+cls_attacks obj_spike_club_swing_attack("spike club swing", "no magical tier", "no elemental type", 20, 0);
+
+cls_attacks obj_spook_attack("spook", "common", "darkness", 0, 5);
+
+cls_attacks obj_haunt_attack("haunt", "common", "darkness", 0, 10);
+
+cls_attacks obj_life_drain_attack("life drain", "intermediate", "earth", 0, 20);
+
+cls_attacks obj_concussion_attack("concussion", "no magical tier", "no elemental type", 25, 0);
+
+cls_attacks obj_first_attack("No name", "no magical tier", "no elemental type", 0, 0);
+
+cls_attacks obj_second_attack("No name", "no magical tier", "no elemental type", 0, 0);
+
+cls_attacks obj_third_attack("No name", "no magical tier", "no elemental type", 0, 0);
+
+cls_attacks obj_fourth_attack("No name", "no magical tier", "no elemental type", 0, 0);
 
 
 
