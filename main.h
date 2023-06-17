@@ -44,21 +44,13 @@ int int_fight_result;
 
 /*-----------* FIGHT *-----------*/
 
-void fct_void_player_escape()
-{
-
-	
-	cout << "You succesfully escaped" << endl;
-
-}
-
 void fct_void_player_escape_ninety_percent()
 {
 
 	if ((rand() % 10) + 1 <= 9)
 	{
 
-		fct_void_player_escape();
+		cout << "You succesfully escaped" << endl;
 
 		bool_fight_abandoned = true;
 
@@ -84,7 +76,7 @@ void fct_void_player_escape_seventy_percent()
 	if ((rand() % 10) + 1 <= 7)
 	{
 
-		fct_void_player_escape();
+		cout << "You succesfully escaped" << endl;
 
 		bool_fight_abandoned = true;
 
@@ -110,7 +102,7 @@ void fct_void_player_escape_fifty_percent()
 	if ((rand() % 10) + 1 <= 5)
 	{
 
-		fct_void_player_escape();
+		cout << "You succesfully escaped" << endl;
 
 		bool_fight_abandoned = true;
 
@@ -136,7 +128,7 @@ void fct_void_player_escape_thirty_percent()
 	if ((rand() % 10) + 1 <= 3)
 	{
 
-		fct_void_player_escape();
+		cout << "You succesfully escaped" << endl;
 
 		bool_fight_abandoned = true;
 
@@ -162,7 +154,7 @@ void fct_void_player_escape_ten_percent()
 	if ((rand() % 10) + 1 <= 1)
 	{
 
-		fct_void_player_escape();
+		cout << "You succesfully escaped" << endl;
 
 		bool_fight_abandoned = true;
 

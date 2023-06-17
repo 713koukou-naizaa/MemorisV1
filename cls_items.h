@@ -41,18 +41,23 @@ private:
 	str str_item_rarity;
 
 	int int_item_heal_stat;
-	int int_item_mana_stat;
+	int int_item_mana_regeneration_stat;
+	int int_item_physical_damage_stat;
+	int int_item_magical_damage_stat;
+
 
 public:
 
-	cls_items(str str_aItem_name, str str_aItem_rarity, int int_aItem_heal_stat, int int_aItem_mana_stat)
+	cls_items(str str_aItem_name, str str_aItem_rarity, int int_aItem_heal_stat, int int_aItem_mana_regeneration_stat, int int_item_physical_damage_stat, int int_item_magical_damage_stat)
 	{
 
 		setStr_item_name(str_aItem_name);
 		setStr_item_rarity(str_aItem_rarity);
 
 		setInt_item_heal_stat(int_aItem_heal_stat);
-		setInt_item_mana_stat(int_aItem_mana_stat);
+		setInt_item_mana_regeneration_stat(int_aItem_regeneration_mana_stat);
+		setInt_item_physical_damage_stat(int_aItem_physical_damage_stat);
+		setInt_item_magical_damage_stat(int_aItem_magical_damage_stat);
 
 	}
 
@@ -93,15 +98,37 @@ public:
 	}
 
 
-	void setInt_item_mana_stat(int int_aItem_mana_stat)
+	void setInt_item_mana_regeneration_stat(int int_aItem_mana_regeneration_stat)
 	{
-		int_item_mana_stat = int_aItem_mana_stat;
+		int_item_mana_regeneration_stat = int_aItem_mana_regeneration_stat;
 	}
 
-	int getInt_item_mana_stat()
+	int getInt_item_mana_regeneration_stat()
 	{
 
-		return int_item_mana_stat;
+		return int_item_mana_regeneration_stat;
+	}
+
+
+	void setInt_item_physical_damage_stat(int int_aItem_physical_damage_stat)
+	{
+		int_item_physical_damage_stat = int_aItem_physical_damage_stat;
+	}
+
+	int getInt_item_physical_damage_stat()
+	{
+		return int_item_physical_damage_stat;
+	}
+
+
+	void setInt_item_magical_damage_stat(int int_aItem_magical_damage_stat)
+	{
+		int_item_magical_damage_stat = int_aItem_magical_damage_stat;
+	}
+
+	int getInt_item_magical_damage_stat()
+	{
+		return int_item_magical_damage_stat;
 	}
 
 };
@@ -109,13 +136,15 @@ public:
 
 //Creating items
 
-cls_items obj_heal_potion("Heal potion", "Common", 20, 0);
+cls_items obj_heal_potion("Heal potion", "Common", 20, 0, 0,0);
 
-cls_items obj_mana_potion("Mana potion", "Common", 0, 5);
+cls_items obj_mana_potion("Mana potion", "Common", 0, 5,0,0);
 
-cls_items obj_green_jelly("Green jelly", "Common", 0, 0);
+cls_items obj_green_jelly("Green jelly", "Common", 0, 0,0,0);
 
-cls_items obj_item("No name", "No rarity", 0, 0); // General item
+cls_items obj_sword("Sword", "Common", 0, 0, 20, 0);
+
+cls_items obj_item("No name", "No rarity", 0, 0,0,0); // General item
 
 
 

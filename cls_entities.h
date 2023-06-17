@@ -55,13 +55,13 @@ private:
 	int int_entity_mana;
 	int int_entity_max_mana;
 
-	int int_entity_base_atk;
+	int int_entity_base_attack;
 	int int_entity_base_heal;
 	int int_entity_base_speed;
 
 public:
 
-	cls_entities(str str_aEntity_name, str str_aEntity_class, str str_aEntity_race, int int_aEntity_lvl, float float_aEntity_xp, float float_aEntity_xp_drop, int int_aEntity_health, int int_aEntity_max_health, int int_aEntity_mana, int int_aEntity_max_mana, int int_aEntity_base_atk, int int_aEntity_base_heal, int int_aEntity_base_speed)
+	cls_entities(str str_aEntity_name, str str_aEntity_class, str str_aEntity_race, int int_aEntity_lvl, float float_aEntity_xp, float float_aEntity_xp_drop, int int_aEntity_health, int int_aEntity_max_health, int int_aEntity_mana, int int_aEntity_max_mana, int int_aEntity_base_attack, int int_aEntity_base_heal, int int_aEntity_base_speed)
 	{
 
 		setStr_entity_name(str_aEntity_name);
@@ -77,7 +77,7 @@ public:
 		setInt_entity_mana(int_aEntity_mana);
 		setInt_entity_max_mana(int_aEntity_max_mana);
 
-		setInt_entity_base_atk(int_aEntity_base_atk);
+		setInt_entity_base_attack(int_aEntity_base_attack);
 		setInt_entity_base_heal(int_aEntity_base_heal);
 		setInt_entity_base_speed(int_aEntity_base_speed);
 
@@ -202,15 +202,15 @@ public:
 	}
 
 
-	void setInt_entity_base_atk(int int_aEntity_base_atk)
+	void setInt_entity_base_attack(int int_aEntity_base_attack)
 	{
-		this->int_entity_base_atk = int_aEntity_base_atk;
+		this->int_entity_base_attack = int_aEntity_base_attack;
 	}
 
-	int getInt_entity_base_atk()
+	int getInt_entity_base_attack()
 	{
 
-		return this->int_entity_base_atk;
+		return this->int_entity_base_attack;
 	}
 
 
@@ -244,7 +244,7 @@ public:
 		cout << "LVL: " << this->getInt_entity_lvl() << endl;
 		cout << "Health: " << this->getInt_entity_health() << endl;
 		cout << "Mana: " << this->getInt_entity_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_atk() << endl;
+		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
 		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
 		cout << "Speed: " << this->getInt_entity_base_speed() << endl;
 		cout << "XP: " << this->getFloat_entity_xp() << "\n" << endl;
@@ -259,7 +259,7 @@ public:
 		cout << "LVL: " << this->getInt_entity_lvl() << endl;
 		cout << "Health: " << this->getInt_entity_health() << endl;
 		cout << "Mana: " << this->getInt_entity_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_atk() << endl;
+		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
 		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
 		cout << "Speed: " << this->getInt_entity_base_speed() << endl;
 		cout << "XP: " << this->getFloat_entity_xp() << endl;
@@ -273,7 +273,7 @@ public:
 
 		cout << "Health: " << this->getInt_entity_max_health() << endl;
 		cout << "Mana: " << this->getInt_entity_max_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_atk() << endl;
+		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
 		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
 		cout << "Speed: " << this->getInt_entity_base_speed() << "\n" << endl;
 
@@ -283,7 +283,7 @@ public:
 	{
 
 		this->setInt_entity_max_health(round(this->getInt_entity_max_health() * 1.2));
-		this->setInt_entity_base_atk(round(this->getInt_entity_base_atk() * 1.2));
+		this->setInt_entity_base_attack(round(this->getInt_entity_base_attack() * 1.2));
 		this->setInt_entity_base_heal(round(this->getInt_entity_base_heal() * 1.2));
 		this->setInt_entity_base_speed(round(this->getInt_entity_base_speed() * 1.2));
 
@@ -297,7 +297,7 @@ public:
 		cout << "LVL: " << this->getInt_entity_lvl() << endl;
 		cout << "Health: " << this->getInt_entity_health() << endl;
 		cout << "Mana: " << this->getInt_entity_mana() << endl;
-		cout << "Attack: " << this->getInt_entity_base_atk() << endl;
+		cout << "Attack: " << this->getInt_entity_base_attack() << endl;
 		cout << "Heal: " << this->getInt_entity_base_heal() << endl;
 		cout << "Speed: " << this->getInt_entity_base_speed() << endl;
 
@@ -307,18 +307,18 @@ public:
 	void fct_void_character_deal_damage(cls_entities* obj_opponent, cls_entities* obj_character) // [MAIN] For an entity to deal damage
 	{
 
-		obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - obj_character->getInt_entity_base_atk());
+		obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - obj_character->getInt_entity_base_attack());
 
-		cout << "You dealt " << obj_character->getInt_entity_base_atk() << " dmg\n" << endl;
+		cout << "You dealt " << obj_character->getInt_entity_base_attack() << " dmg\n" << endl;
 
 	}
 
 	void fct_void_character_take_damage(cls_entities* obj_character, cls_entities* obj_opponent) // [MAIN] For an entity to take damage
 	{
 
-		obj_character->setInt_entity_health(obj_character->getInt_entity_health() - obj_opponent->getInt_entity_base_atk());
+		obj_character->setInt_entity_health(obj_character->getInt_entity_health() - obj_opponent->getInt_entity_base_attack());
 
-		cout << "You received " << obj_opponent->getInt_entity_base_atk() << " dmg\n" << endl;
+		cout << "You received " << obj_opponent->getInt_entity_base_attack() << " dmg\n" << endl;
 
 	}
 
