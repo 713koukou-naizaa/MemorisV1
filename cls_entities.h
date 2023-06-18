@@ -49,6 +49,8 @@ private:
 	str str_entity_class;
 	str str_entity_race;
 
+	bool bool_elemental_creature;
+
 	int int_entity_lvl;
 	float float_entity_xp;
 	float float_entity_xp_drop;
@@ -70,7 +72,7 @@ private:
 
 public:
 
-	cls_entities(str str_aEntity_name, str str_aEntity_class, str str_aEntity_race, int int_aEntity_lvl, float float_aEntity_xp,
+	cls_entities(str str_aEntity_name, str str_aEntity_class, str str_aEntity_race, bool bool_aElemental_creature, int int_aEntity_lvl, float float_aEntity_xp,
 		float float_aEntity_xp_drop, int int_aEntity_health, int int_aEntity_max_health, int int_aEntity_mana,int int_aEntity_max_mana,
 		int int_aEntity_base_physical_attack, int int_aEntity_base_magical_attack,int int_aEntity_base_heal, int int_aEntity_base_speed,
 		cls_attacks& cls_attacks_aFirst_attack, cls_attacks& cls_attacks_aThird_attack, cls_attacks& cls_attacks_aFourth_attack,
@@ -80,6 +82,7 @@ public:
 		setStr_entity_name(str_aEntity_name);
 		setStr_entity_class(str_aEntity_class);
 		setStr_entity_race(str_aEntity_race);
+		setBool_elemental_creature(bool_aElemental_creature);
 
 		setInt_entity_lvl(int_aEntity_lvl);
 		setFloat_entity_xp(float_aEntity_xp);
@@ -138,6 +141,15 @@ public:
 		return this->str_entity_race;
 	}
 
+	void setBool_elemental_creature(bool bool_aElemental_creature)
+	{
+		this->bool_elemental_creature = bool_aElemental_creature;
+	}
+
+	bool getBool_elemental_creature()
+	{
+		return this->bool_elemental_creature;
+	}
 
 	void setInt_entity_lvl(int int_aEntity_lvl)
 	{
@@ -366,67 +378,234 @@ public:
 	}
 
 
-	void fct_void_character_attack_choice(cls_entities* obj_opponent, cls_entities* obj_character) // [MAIN] For an entity to deal damage
+	void fct_void_character_attack(cls_entities* obj_opponent, cls_entities* obj_character) // [MAIN] For an entity to deal damage
 	{
 
 		int int_attack_choice;
 
-		cout << "Choose an attack:" << endl;
-		cout << "[1] " << obj_character->getCls_attacks_first_attack().getStr_attack_name() << endl;
-		cout << "[2] " << obj_character->getCls_attacks_second_attack().getStr_attack_name() << endl;
-		cout << "[3] " << obj_character->getCls_attacks_third_attack().getStr_attack_name() << endl;
-		cout << "[4] "<<obj_character->getCls_attacks_fourth_attack().getStr_attack_name() << endl;
-		cout << "[5] Return" << endl;
+		bool bool_no_attack_used = true;
 
-		cin >> int_attack_choice;
-
-		switch (int_attack_choice)
+		do
 		{
 
-		case 1:
+			cout << "Choose an attack:" << endl;
+			cout << "[1] " << obj_character->getCls_attacks_first_attack().getStr_attack_name() << endl;
+			cout << "[2] " << obj_character->getCls_attacks_second_attack().getStr_attack_name() << endl;
+			cout << "[3] " << obj_character->getCls_attacks_third_attack().getStr_attack_name() << endl;
+			cout << "[4] " << obj_character->getCls_attacks_fourth_attack().getStr_attack_name() << endl;
+			cout << "[5] Return" << endl;
 
-			cout << "You used " << obj_character->getCls_attacks_first_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_first_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage() << " damages" << endl;
+			cin >> int_attack_choice;
 
-			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_first_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage()));
+			switch (int_attack_choice)
+			{
 
-			break;
+			case 1:
 
-		case 2:
+				if (obj_character->getCls_attacks_first_attack().getStr_attack_name() == "No name")
+				{
 
-			cout << "You used " << obj_character->getCls_attacks_second_attack().getStr_attack_name() << ", you dealt" << obj_character->getCls_attacks_second_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage() << " damages" << endl;
+					cout << "You don't have an attack in that slot, please choosse another attack" << endl;
 
-			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_second_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage()));
+					bool_no_attack_used = true;
 
-			break;
+				}
+				else if (obj_character->getCls_attacks_first_attack().getStr_attack_name() != "No name")
+				{
 
-		case 3: 
+					if (obj_opponent->getBool_elemental_creature() == true)
+					{
 
-			cout << "You used " << obj_character->getCls_attacks_third_attack().getStr_attack_name() << ", you dealt" << obj_character->getCls_attacks_third_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage() << " damages" << endl;
+						cout << "You used " << obj_character->getCls_attacks_first_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage() << " damages" << endl;
 
-			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_third_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage()));
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage());
 
-			break;
+					}
+					else if (obj_opponent->getBool_elemental_creature() == false)
+					{
 
-		case 4: 
+						cout << "You used " << obj_character->getCls_attacks_first_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_first_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage() << " damages" << endl;
 
-			cout << "You used " << obj_character->getCls_attacks_fourth_attack().getStr_attack_name() << ", you dealt" << obj_character->getCls_attacks_fourth_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage() << " damages" << endl;
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_first_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_first_attack().getInt_attack_magical_damage()));
 
-			obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_fourth_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage()));
+					}
+					else
+					{
 
-			break;
+						cout << "Problem with elemental creature state of opponent" << endl;
 
-		case 5:
+					}
 
-			// Continues code
+					bool_no_attack_used = false;
 
-			break;
+				}
+				else
+				{
 
-		default: 
+					cout << "Problem with attack slot 1" << endl;
 
-			cout << "Invalid choice, please enter the number corresponding to your desired choice" << endl;
+				}
 
-			fct_void_character_attack_choice(obj_opponent, obj_character);
-		}
+				break;
+
+			case 2:
+
+				if (obj_character->getCls_attacks_second_attack().getStr_attack_name() == "No name")
+				{
+
+					cout << "You don't have an attack in that slot, please choose another attack" << endl;
+
+					bool_no_attack_used = true;
+
+				}
+				else if (obj_character->getCls_attacks_second_attack().getStr_attack_name() != "No name")
+				{
+
+					if (obj_opponent->getBool_elemental_creature() == true)
+					{
+
+						cout << "You used " << obj_character->getCls_attacks_second_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage());
+
+					}
+					else if (obj_opponent->getBool_elemental_creature() == false)
+					{
+
+						cout << "You used " << obj_character->getCls_attacks_second_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_second_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_second_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_second_attack().getInt_attack_magical_damage()));
+
+					}
+					else
+					{
+
+						cout << "Problem with elemental creature state of opponent" << endl;
+
+					}
+
+					bool_no_attack_used = false;
+
+				}
+				else
+				{
+
+					cout << "Problem with attack slot 2" << endl;
+
+				}
+
+				break;
+
+			case 3:
+
+				if (obj_character->getCls_attacks_third_attack().getStr_attack_name() == "No name")
+				{
+
+					cout << "You don't have an attack in that slot, please choose another attack" << endl;
+
+					bool_no_attack_used = true;
+
+				}
+				else if (obj_character->getCls_attacks_third_attack().getStr_attack_name() != "No name")
+				{
+
+					if (obj_opponent->getBool_elemental_creature() == true)
+					{
+
+						cout << "You used " << obj_character->getCls_attacks_third_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage());
+
+					}
+					else if (obj_opponent->getBool_elemental_creature() == false)
+					{
+
+						cout << "You used " << obj_character->getCls_attacks_third_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_third_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_third_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_third_attack().getInt_attack_magical_damage()));
+
+					}
+					else
+					{
+
+						cout << "Problem with elemental creature state of opponent" << endl;
+
+					}
+
+					bool_no_attack_used = false;
+
+				}
+				else
+				{
+
+					cout << "Problem with attack slot 3" << endl;
+
+				}
+
+				break;
+
+			case 4:
+
+				if (obj_character->getCls_attacks_fourth_attack().getStr_attack_name() == "No name")
+				{
+
+					cout << "You don't have an attack in that slot, please choose another attack" << endl;
+
+					bool_no_attack_used = true;
+
+				}
+				else if (obj_character->getCls_attacks_fourth_attack().getStr_attack_name() != "No name")
+				{
+
+					if (obj_opponent->getBool_elemental_creature() == true)
+					{
+
+						cout << "You used " << obj_character->getCls_attacks_fourth_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage());
+
+					}
+					else if (obj_opponent->getBool_elemental_creature() == false)
+					{
+
+						cout << "You used " << obj_character->getCls_attacks_fourth_attack().getStr_attack_name() << ", you dealt " << obj_character->getCls_attacks_fourth_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage() << " damages" << endl;
+
+						obj_opponent->setInt_entity_health(obj_opponent->getInt_entity_health() - (obj_character->getCls_attacks_fourth_attack().getInt_attack_physical_damage() + obj_character->getCls_attacks_fourth_attack().getInt_attack_magical_damage()));
+
+					}
+					else
+					{
+
+						cout << "Problem with elemental creature state of opponent" << endl;
+
+					}
+
+					bool_no_attack_used = false;
+
+				}
+				else
+				{
+
+					cout << "Problem with attack slot 4" << endl;
+
+				}
+
+				break;
+
+			case 5:
+
+				// Continues code
+
+				break;
+
+			default:
+
+				cout << "Invalid choice, please enter the number corresponding to your desired choice" << endl;
+
+				fct_void_character_attack(obj_opponent, obj_character);
+			}
+
+		}while(bool_no_attack_used == true);
 		
 	}
 
@@ -542,71 +721,71 @@ public:
 
 //Creating NPC's
 
-cls_entities obj_baker("baker", "No class", "human",
+cls_entities obj_baker("baker", "No class", "human", false,
 	1, 0, 0, 50, 50, 20, 20, 1, 0, 0, 50,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
 //Creating playable characters
 
-cls_entities obj_wolf("wolf", "No class", "canidae",
+cls_entities obj_wolf("wolf", "No class", "canidae", false,
 	1, 0, 5, 20, 20, 20, 20, 5, 0, 0, 110,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_slime("slime", "No class", "slime",
+cls_entities obj_slime("slime", "No class", "slime", true,
 	1, 0, 5, 30, 30, 20, 20, 5, 5, 0, 70,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_slime_catastrophy("slime catastrophy", "No class", "slime",
+cls_entities obj_slime_catastrophy("slime catastrophy", "No class", "slime", true,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_goblin("goblin", "No class", "goblin",
+cls_entities obj_goblin("goblin", "No class", "goblin", false,
 	1, 0, 10, 40, 40, 20, 20, 15, 0, 0, 80,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_hobgoblin("hobgoblin", "No class", "goblin",
+cls_entities obj_hobgoblin("hobgoblin", "No class", "goblin", false,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_ghost("ghost", "No class", "undead",
+cls_entities obj_ghost("ghost", "No class", "undead", true,
 	1, 0, 15, 55, 55, 20, 20, 25, 25, 0, 90,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_spirit("spirit", "No class", "undead",
+cls_entities obj_spirit("spirit", "No class", "undead", true,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_specter("specter", "No class", "undead",
+cls_entities obj_specter("specter", "No class", "undead", true,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_oni("oni", "No class", "yokai",
+cls_entities obj_oni("oni", "No class", "yokai", false,
 	30, 0, 50, 200, 200, 20, 20, 70, 70, 0, 70,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_kirin("kirin", "No class", "kirin",
+cls_entities obj_kirin("kirin", "No class", "kirin", true,
 	50, 0, 70, 190, 190, 20, 20, 110, 110, 30, 150,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_opponent("opponent", "No class", "No race",
+cls_entities obj_opponent("opponent", "No class", "No race", false,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	obj_first_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);// General opponent used in fight functions after setting its stats to desired one
 
 //Creating active entities (ennemies)
 
-cls_entities obj_gakutan("Gakutan", "[Assassin]", "???",
+cls_entities obj_gakutan("Gakutan", "[Assassin]", "???", false,
 	1, 0, 0, 50, 50, 20, 20, 70, 0, 0, 170,
 	obj_punch_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_elva("Elva", "[Priest]", "angel",
+cls_entities obj_elva("Elva", "[Priest]", "angel", false,
 	1, 0, 0, 150, 150, 20, 20, 15, 0, 35, 100,
 	obj_punch_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_dain("Dain", "[Warrior]", "dwarf",
+cls_entities obj_dain("Dain", "[Warrior]", "dwarf", false,
 	1, 0, 0, 200, 200, 20, 20, 30, 0, 0, 60,
 	obj_punch_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);
 
-cls_entities obj_character("No name", "No class", "No race",
+cls_entities obj_character("No name", "No class", "No race", false,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	obj_fourth_attack, obj_second_attack, obj_third_attack, obj_fourth_attack);// General opponent used in fight functions after setting its stats to desired one
 

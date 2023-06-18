@@ -128,6 +128,8 @@ public:
 
 cls_attacks obj_punch_attack("punch", "no magical tier", "no elemental type", 5, 0);
 
+cls_attacks obj_wind_sword_slash_attack("wind sword slash", "common", "wind", 5, 5);
+
 cls_attacks obj_bite_attack("bite", "no magical tier", "no elemental type", 10, 0);
 
 cls_attacks obj_corrosion_attack("corrosion", "common", "poison", 0, 10);

@@ -221,19 +221,12 @@ void fct_void_player_fight_choice() // Algorithm for player to act on fight turn
 
 		int int_opponent_health = obj_opponent.getInt_entity_health();
 
-		obj_character.fct_void_character_attack_choice(&obj_opponent, &obj_character);
+		obj_character.fct_void_character_attack(&obj_opponent, &obj_character);
 
 		if (obj_opponent.getInt_entity_health() <= 0 && obj_character.getInt_entity_health() > 0)
 		{
 
 			obj_opponent.setInt_entity_health(0);
-
-		}
-
-		if (obj_opponent.getInt_entity_health() >= int_opponent_health)
-		{
-
-			fct_void_player_fight_choice();
 
 		}
 
